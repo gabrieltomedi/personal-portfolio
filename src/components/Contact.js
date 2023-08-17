@@ -12,7 +12,7 @@ export const Contact = () => {
     }
 
     const [formDetails, setFormDetails] = useState(formInitialDetails);
-    const [buttonText, setButonText] = useState('Send');
+    const [buttonText, setButtonText] = useState('Send');
     const [status, setStatus] = useState({});
     const onFormUpdate = (category, value) => {
         setFormDetails({
@@ -21,20 +21,36 @@ export const Contact = () => {
         })
     }
 
-    const handlerSubmit = () => {
-
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setButtonText("Sending...");
+        let response = await fetch("http://localhost:3001/contact", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify(formDetails),
+        });
+        setButtonText("Send");
+        let result = await response.json();
+        setFormDetails(formInitialDetails);
+        if (result.code == 200) {
+            setStatus({ succes: true, message: 'Message sent successfully' });
+        } else {
+            setStatus({ succes: false, message: 'Something went wrong, please try again later.' });
+        }
+    };
 
     return (
         <section className="contact" id="connect">
             <Container>
-                <Row className="align-items-center">    
+                <Row className="align-items-center">
                     <Col md={6}>
-                        <img src={contactImg} alt="ContactUs"/>
+                        <img src={contactImg} alt="ContactUs" />
                     </Col>
                     <Col md={6}>
                         <h2>Get In Touch</h2>
-                        <form onSubmit={handlerSubmit}>
+                        <form onSubmit={handleSubmit}>
                             <Row>
                                 <Col sm={6} className="px-1">
                                     <input type="text" value={formDetails.firstName} placeholder="First Name" onChange={(e) => onFormUpdate('firstName', e.target.value)} />
@@ -52,12 +68,13 @@ export const Contact = () => {
                                     <textarea row="6" value={formDetails.message} placeholder="Message" onChange={(e) => onFormUpdate('message', e.target.value)} />
                                     <button type="submit"> <span>{buttonText}</span> </button>
                                 </Col>
-                                {
-                                    status.message && 
-                                    <col>
-                                        <p className={status.success === false ? "danger" : "success"}>{status.message}</p>
-                                    </col>
-                                }
+                                {status.message && (
+                                    <div className="row">
+                                        <p className={status.success === false ? "danger" : "success"}>
+                                            {status.message}
+                                        </p>
+                                    </div>
+                                )}
                             </Row>
                         </form>
                     </Col>

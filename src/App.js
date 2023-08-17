@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
 import { NavBar } from './components/NavBar';
 import { Banner } from './components/Banner';
@@ -8,6 +9,12 @@ import { Contact } from './components/Contact';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+  useEffect(() => {
+    fetch("/api")
+    .then((res) => res.json())
+    .then((data) => { console.log(data)})
+  }, [])
+
   return (
     <div className="App">
       <NavBar />
