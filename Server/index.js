@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require('path');
-const router = express.Router();
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 require('dotenv').config();
@@ -10,10 +9,12 @@ const PORT = process.env.PORT || 3001;
 
 // server used to send send emails
 const app = express();
+
+app.use(express.static(path.resolve(__dirname, '../build')));
 app.use(cors());
-app.use(express.json());
-app.use("/", router);
-app.listen(PORT, () => console.log("Server Running"));
+app.use(bodyParser.json());
+
+app.listen(PORT, () => console.log(`Server is online on port ${PORT}`));
 
 
 const contactEmail = nodemailer.createTransport({
@@ -32,7 +33,7 @@ contactEmail.verify((error) => {
   }
 });
 
-router.post("/contact", (req, res) => {
+app.post("/api/contact", bodyParser.urlencoded({extended: false}), (req, res) => {
   const name = req.body.firstName + req.body.lastName;
   const email = req.body.email;
   const message = req.body.message;
@@ -53,4 +54,8 @@ router.post("/contact", (req, res) => {
       res.json({ code: 200, status: "Message Sent" });
     }
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
 });
