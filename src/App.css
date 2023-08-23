@@ -179,6 +179,7 @@ span.navbar-text {
 
 .navbar-text button span {
   z-index: 1;
+  color: #fff;
 }
 
 .navbar-text button::before {
@@ -336,6 +337,10 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   border-right: 0.08em solid #666;
 }
 
+.banner a {
+  text-decoration: none;
+}
+
 /************ Skills Css ************/
 .skill {
   padding: 0 0 50px 0;
@@ -375,10 +380,10 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .background-image-left {
-  top: 28%;
+  top: 0%;
   position: absolute;
   bottom: 0;
-  width: 40%;
+  width: 100%;
   z-index: -4;
 }
 
@@ -610,13 +615,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   width: 100%;
 }
 
-/************ News Letter ************/
+/************ Newsletter ************/
 .newsletter-bx {  
   background: #FFFFFF;
   border-radius: 55px;
   color: #121212;
   padding: 85px 125px;
-  margin: -122px 40px 80px 40px;
+  margin: -122px 0 80px 0;
 }
 
 .newsletter-bx h3 {
@@ -675,6 +680,27 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-weight: 500;
   letter-spacing: 0.5px;
   border-radius: 18px;
+}
+
+/************ Footer ************/
+.footer {
+  padding: 0 0 50px 0;
+  background-image: url('./assets/img/footer-bg.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.footer img {
+  width: 26%;
+}
+
+.footer p {
+  font-weight: 400;
+  font-size: 14px;
+  color: #B8B8B8;
+  letter-spacing: 0.5px;
+  margin-top: 20px;
 }
 
 .App {
